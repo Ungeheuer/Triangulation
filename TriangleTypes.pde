@@ -21,6 +21,7 @@ class TriangleTypes extends Triangle {
       type = 'm';
     }
     
+    
   }
 
   // ----- generate random type and return color ---- //
@@ -30,6 +31,12 @@ class TriangleTypes extends Triangle {
       return color (204, 102, 0);
     } else if (type == 'm') {
       return color (0, 102, 204);
+    }
+    else if (type == 's') {
+      return color (255, 0, 0);
+    }
+    else if (type == 'e') {
+      return color (0, 255, 0);
     }
     else {
        return color (255, 0, 0);

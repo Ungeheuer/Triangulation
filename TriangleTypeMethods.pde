@@ -1,3 +1,4 @@
+// --- findTriTypes checks if types are already attached and adds them if not --- //
 void findTriTypes () {
 
   for (int i = 0; i < triangles.size(); i++) {
@@ -13,7 +14,6 @@ void findTriTypes () {
     }
 
     if (!hasTriType) {
-      println ("HASTRITYPE");
       TriangleTypes triType = new TriangleTypes(tri);
       triangleTypes.add(triType);
     }
@@ -43,18 +43,29 @@ void drawTriangles () {
 }
 
 void moveTroughTriangles () {
+   // ----- use left / right key to navigate through the triangles ---- //
   if (f >= triangles.size ()) {
     f = 0;
   } else if (f < 0) {
     f = triangles.size()-1;
   }
-  
-  drawTriangles ();
-  
-  noFill();
-  strokeWeight(4);
-  stroke (0, 0, 0);
-  Triangle tri = (Triangle)triangles.get(f);
-  triangle (tri.p1.x, tri.p1.y, tri.p2.x, tri.p2.y, tri.p3.x, tri.p3.y);
-  
+}
+
+// --- overrideType is called by typing in a char and overrides the triangle type to plus / minus --- //
+void overrideType(char c) {
+  TriangleTypes triType = (TriangleTypes)triangleTypes.get(f);
+  triType.type = c;
+}
+
+// --- setType is called by typing in a char and sets the triangle type to start / end--- //
+void setType(char c) {
+  for (int j = 0; j < triangleTypes.size(); j++) {
+    TriangleTypes triType = (TriangleTypes)triangleTypes.get(j);
+    if (triType.type == c) {
+      triType.RandomType();
+      break;
+    }
+  }
+  TriangleTypes triType = (TriangleTypes)triangleTypes.get(f);
+  triType.type = c;
 }
