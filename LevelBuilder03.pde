@@ -100,7 +100,7 @@ void keyPressed () {
   triangle (tri.p1.x, tri.p1.y, tri.p2.x, tri.p2.y, tri.p3.x, tri.p3.y);
 }
 
-
+// ----- export JSON ---- //
 void TriangulationExport() {
   
    JSONArray trianglesJSON = new JSONArray();
@@ -125,5 +125,3 @@ void TriangulationExport() {
   json.setJSONArray("triangles", trianglesJSON);
   saveJSONObject(json, "data/new.json");
 }
-
-//JSON? -> Triangles, TriangleTypes
