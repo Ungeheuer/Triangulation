@@ -1,5 +1,7 @@
 import org.processing.wiki.triangulate.*;
 
+JSONObject json;
+
 ArrayList triangles = new ArrayList();
 ArrayList points = new ArrayList();
 ArrayList triangleTypes = new ArrayList();
@@ -9,6 +11,7 @@ int f = 0;
 void setup() {
   size(400, 400);
   smooth();
+  
 }
 
 void draw() {
@@ -68,6 +71,8 @@ void keyPressed () {
     } else if (keyCode == RIGHT) {
       f++;
       moveTroughTriangles();
+    } else if (keyCode == DOWN) {
+      TriangulationExport();
     }
     // ----- set a type (plus, minus, start, end) to triangles ---- //
   } else {
@@ -94,3 +99,31 @@ void keyPressed () {
   Triangle tri = (Triangle)triangles.get(f);
   triangle (tri.p1.x, tri.p1.y, tri.p2.x, tri.p2.y, tri.p3.x, tri.p3.y);
 }
+
+
+void TriangulationExport() {
+  
+   JSONArray trianglesJSON = new JSONArray();
+
+  for (int j = 0; j < triangleTypes.size(); j++) {
+    JSONObject triangleJSON= new JSONObject();
+    triangleJSON.setInt("id", j);
+    TriangleTypes triType = (TriangleTypes)triangleTypes.get(j);
+    triangleJSON.setString("type", str(triType.type));
+
+    triangleJSON.setFloat("p1x", triType.triangle.p1.x);
+    triangleJSON.setFloat("p1y", triType.triangle.p1.y);
+    triangleJSON.setFloat("p2x", triType.triangle.p2.x);
+    triangleJSON.setFloat("p2y", triType.triangle.p2.y);
+    triangleJSON.setFloat("p3x", triType.triangle.p3.x);
+    triangleJSON.setFloat("p3y", triType.triangle.p3.y);
+    
+    trianglesJSON.setJSONObject(j, triangleJSON);
+  }
+
+  json = new JSONObject();
+  json.setJSONArray("triangles", trianglesJSON);
+  saveJSONObject(json, "data/new.json");
+}
+
+//JSON? -> Triangles, TriangleTypes
